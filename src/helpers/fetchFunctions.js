@@ -1,7 +1,7 @@
 const API_URL = ('https://api.mercadolibre.com/sites/MLB/search?q=');
 
-export const fetchProduct = () => {
-  // seu código aqui
+export const fetchProduct = async () => {
+
 };
 
 export const fetchProductsList = async (query) => {
