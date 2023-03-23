@@ -16,6 +16,13 @@ const removeLoading = () => {
   productsSection.removeChild(elementLoad);
 };
 
+const createMessageError = () => {
+  const elementMessage = document.createElement('p');
+  elementMessage.innerText = 'Algum erro ocorreu, recarregue a página e tente novamente';
+  elementMessage.classList = 'error';
+  productsSection.appendChild(elementMessage);
+};
+
 const renderProducts = async () => {
   createLoading();
   try {
@@ -25,22 +32,8 @@ const renderProducts = async () => {
     });
     removeLoading();
   } catch (error) {
-    console.error(error.message);
+    createMessageError();
   }
 };
 
 renderProducts();
-
-// async function createLoading() {
-//   productsSection.appendChild(createCustomElement('p', 'loading', 'Carregando...'));
-//   fetchProductsList('computador').then((response) => response.json())
-//     .then((data) => productsSection.removeChild(document.querySelector('.loading')));
-// }
-// createLoading();
-
-// async function createLoading() {
-//   productsSection.appendChild(createCustomElement('p', 'loading', 'Carregando...'));
-//   fetchProductsList('computador').then((response) => response.json()).then((data) => {
-//   productsSection.removeChild(document.querySelector('.loading')))
-// // codigo que envolva o 'data' aqui
-// }
