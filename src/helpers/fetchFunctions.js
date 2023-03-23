@@ -1,7 +1,13 @@
 const API_URL = ('https://api.mercadolibre.com/sites/MLB/search?q=');
+const ENDPOINT = ('https://api.mercadolibre.com/items/');
 
-export const fetchProduct = async () => {
-
+export const fetchProduct = async (paramID) => {
+  if (!paramID) {
+    throw new Error('ID não informado');
+  }
+  const response = await fetch(`${ENDPOINT}${paramID}`);
+  const data = await response.json();
+  return data;
 };
 
 export const fetchProductsList = async (query) => {
