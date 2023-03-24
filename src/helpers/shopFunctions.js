@@ -1,5 +1,5 @@
-import { removeCartID, saveCartID } from './cartFunctions';
-import { fetchProduct } from './fetchFunctions';
+import { removeCartID, saveCartID, getSavedCartIDs } from './cartFunctions';
+import { fetchProduct, fetchProductsList } from './fetchFunctions';
 
 // Esses comentários que estão antes de cada uma das funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições!
@@ -40,6 +40,16 @@ export const createCustomElement = (element, className, innerText = '') => {
 export const getIdFromProduct = (product) => (
   product.querySelector('span.product__id').innerText
 );
+const totalValueCart = () => {
+  const totalPrice = document.querySelector('.total-price');
+  const prices = [];
+  fetchProductsList('computador').then((data) => {
+    getSavedCartIDs().forEach((id) => {
+      prices.push(data.find((product) => product.id === id).price);
+    });
+    totalPrice.innerText = prices.reduce((acc, cur) => acc + cur, 0);
+  });
+};
 
 /**
  * Função que remove o produto do carrinho.
@@ -49,6 +59,7 @@ export const getIdFromProduct = (product) => (
 const removeCartProduct = (li, id) => {
   li.remove();
   removeCartID(id);
+  totalValueCart();
 };
 
 /**
