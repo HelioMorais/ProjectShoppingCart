@@ -1,3 +1,5 @@
+import { totalValueCart } from './shopFunctions';
+
 /**
  * Função que retorna todos os itens do carrinho salvos no localStorage.
  * @returns {Array} Itens de ids salvos do carrinho ou array vazio.
@@ -17,6 +19,7 @@ export const saveCartID = (id) => {
   const cartProducts = getSavedCartIDs();
   const newCartProducts = [...cartProducts, id];
   localStorage.setItem('cartProducts', JSON.stringify(newCartProducts));
+  totalValueCart();
 };
 
 /**

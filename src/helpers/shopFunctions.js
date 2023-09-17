@@ -40,15 +40,18 @@ export const createCustomElement = (element, className, innerText = '') => {
 export const getIdFromProduct = (product) => (
   product.querySelector('span.product__id').innerText
 );
-const totalValueCart = () => {
-  const totalPrice = document.querySelector('.total-price');
-  const prices = [];
-  fetchProductsList('computador').then((data) => {
-    getSavedCartIDs().forEach((id) => {
-      prices.push(data.find((product) => product.id === id).price);
-    });
-    totalPrice.innerText = prices.reduce((acc, cur) => acc + cur, 0);
+export const totalValueCart = async () => {
+  const totalPriceElement = document.querySelector('.total-price');
+  const cartIds = await getSavedCartIDs();
+  const products = await fetchProductsList('computador');
+
+  const prices = cartIds.map((id) => {
+    const product = products.find((element) => element.id === id);
+    return product ? product.price : 0;
   });
+
+  const totalPrice = prices.reduce((acc, cur) => acc + cur, 0);
+  totalPriceElement.innerText = totalPrice.toFixed(2);
 };
 
 /**
